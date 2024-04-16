@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/security_db
+    username: postgres
+    password: postgres
+  jpa:
+    hibernate:
+      ddl-auto: update
+mqtt:
+  broker:
+    url: tcp://localhost:1883
+  client:
+    id: SpringMqtt
+  topic: topic
+  username: admin
+  password: admin

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration</title>
+    <style>
+        /* Стили для формы регистрации */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
+        .container {
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0 15px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .message {
+            color: red;
+        }
+        .button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+        .success-message {
+            display: none;
+            padding: 20px;
+            background-color: lightgreen;
+            border-radius: 5px;
+            margin-top: 20px;
+            border: 1px solid #4CAF50;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        }
+        .usernameExists {
+            display: none;
+            padding: 20px;
+            background-color: #e74444;
+            border-radius: 5px;
+            margin-top: 20px;
+            border: 1px solid #e74444;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+<div class="container" id="registrationContainer">
+    <form id="registrationForm">
+        <h2>Registration</h2>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <label for="confirmPassword">Confirm Password:</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" required>
+        <input type="checkbox" id="showPassword">
+        <label for="showPassword">Show Password</label>
+        <p class="message" id="passwordMismatch"></p>
+        <button type="submit" class="button">Register</button>
+    </form>
+    <div class="success-message" id="successMessage">
+        <p>Регистрация прошла успешно!</p>
+    </div>
+    <div class="usernameExists" id="usernameExists">
+        <p>Пользователь с таким именем существует!</p>
+    </div>
+</div>
+
+
+<script>
+    // Функция для показа или скрытия пароля
+    function togglePassword() {
+        var passwordInput = document.getElementById("password");
+        var confirmPasswordInput = document.getElementById("confirmPassword");
+        var showPasswordCheckbox = document.getElementById("showPassword");
+
+        if (showPasswordCheckbox.checked) {
+            passwordInput.type = "text";
+            confirmPasswordInput.type = "text";
+        } else {
+            passwordInput.type = "password";
+            confirmPasswordInput.type = "password";
+        }
+    }
+
+    // Функция для проверки пароля на кириллицу и длину
+    function validatePassword(password) {
+        var regex = /[а-яА-Я]/; // Регулярное выражение для проверки кириллицы
+        if (password.length < 8) {
+            return "Password must be at least 8 characters long.";
+        } else if (regex.test(password)) {
+            return "Password cannot contain Cyrillic characters.";
+        } else {
+            return ""; // Пароль прошел все проверки
+        }
+    }
+
+    // Слушатель событий для флажка "Show Password"
+    document.getElementById("showPassword").addEventListener("change", togglePassword);
+
+    // Обработчик отправки формы
+    document.getElementById("registrationForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+        var password = document.getElementById("password").value;
+        var confirmPassword = document.getElementById("confirmPassword").value;
+
+        // Проверка пароля на совпадение
+        if (password !== confirmPassword) {
+            document.getElementById("passwordMismatch").textContent = "Passwords do not match";
+            return;
+        }
+
+        // Проверка пароля на длину и отсутствие кириллицы
+        var passwordError = validatePassword(password);
+        if (passwordError) {
+            document.getElementById("passwordMismatch").textContent = passwordError;
+            return;
+        }
+
+        // Очистка сообщения о несоответствии паролей перед отправкой формы
+        document.getElementById("passwordMismatch").textContent = "";
+
+        // Создание объекта с данными формы
+        var formData = {
+            username: document.getElementById("username").value,
+            password: password
+        };
+
+        // Отправка данных формы по AJAX запросу
+        fetch("/registration", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(formData)
+        })
+            .then(response => response.json())
+            .then(data => {
+                // Проверка результата регистрации
+                if (data.success) {
+                    // Если регистрация прошла успешно
+                    document.getElementById("registrationForm").style.display = "none";
+                    document.getElementById("usernameExists").style.display = "none";
+                    document.getElementById("successMessage").style.display = "block";
+                } else if (!data.success) {
+                    // Если пользователь уже существует
+                    document.getElementById("usernameExists").style.display = "block";
+                }
+            })
+            .catch(error => {
+                console.error("Registration failed:", error);
+                // Здесь можно выполнить дополнительные действия при ошибке регистрации
+            });
+    });
+</script>
+</body>
+</html>
