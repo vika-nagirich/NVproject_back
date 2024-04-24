@@ -27,7 +27,10 @@ public class UserController {
 
     return new ClassPathResource("static/registration.html"); // Путь к файлу HTML
   }
-
+  @GetMapping("/portfolio")
+  public Resource portfolioPage(){
+    return new ClassPathResource("static/portfolio.html");
+  }
 
 
   @PostMapping("/registration")

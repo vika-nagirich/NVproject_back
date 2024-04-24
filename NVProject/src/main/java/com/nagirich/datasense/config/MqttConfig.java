@@ -14,10 +14,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-@Configuration
+@Configuration // аннотация, класс является конфигурационним для mqtt
 public class MqttConfig {
 
-  @Autowired
+  @Autowired // внедрение зависимостей для лбработки полученних данних
   private MqttService mqttService;
 
   @Value("${mqtt.broker.url}")
@@ -76,7 +76,7 @@ public class MqttConfig {
         System.out.println("Connected to MQTT broker.");
         try {
           // После успешного подключения, подписываемся на топик
-          mqttClient.subscribe(topic, 0);
+          mqttClient.subscribe(topic, 0); //проверка токена на качество обслуживания
         } catch (MqttException e) {
           System.out.println("Error subscribing to topic: " + e.getMessage());
         }

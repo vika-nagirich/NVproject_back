@@ -34,6 +34,12 @@
       top: 20px;
       right: 20px;
     }
+    .button-container {
+      position: absolute;
+      top: 20px; /* Змініть це значення, якщо потрібно змінити відступ від верхнього краю */
+      left: 20px; /* Змініть це значення, якщо потрібно змінити відступ від лівого краю */
+      z-index: 9999; /* Це значення забезпечить, що кнопка буде найвище відображатися над іншим контентом */
+    }
     .button {
       margin-left: 10px;
       padding: 10px 20px;
@@ -114,6 +120,9 @@
 <div class="buttons">
   <a href="/login" class="button">Sign In</a>
   <a href="/registration" class="button">Register</a>
+</div>
+<div class="button-container">
+  <a href="/portfolio" class="button">Go to Portfolio</a>
 </div>
 <div class="container">
   <div class="info">

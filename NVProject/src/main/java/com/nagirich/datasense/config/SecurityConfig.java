@@ -39,7 +39,7 @@ public class SecurityConfig {
 //        .build();
 //
 //    return new InMemoryUserDetailsManager(admin, user);
-    return new MyUserDetailsService();
+    return new MyUserDetailsService(); // загрузка инф о пользователе из бд
   }
   @Bean
   public AuthenticationProvider authenticationProvider(){
@@ -58,7 +58,8 @@ public class SecurityConfig {
             .requestMatchers("api/v1/apps/welcome",
                 "api/v1/apps/new-user",
                 "registration",
-                "/").permitAll() // Разрешение доступа к конкретному URL без аутентификации
+                "/","/portfolio").permitAll() // Разрешение доступа к конкретному URL без аутентификации
+
             .requestMatchers("api/v1/apps/**").authenticated()) // Запросы по определенному шаблону должны быть аутентифицированы
         .formLogin(AbstractAuthenticationFilterConfigurer::permitAll) // Разрешение доступа к странице входа (форме входа) без аутентификации
         .build(); // Создание и возврат объекта SecurityFilterChain

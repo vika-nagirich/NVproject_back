@@ -14,17 +14,17 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-@Service
-@AllArgsConstructor
+@Service // сервис, говорит спрингу,что приложение имеет бизнес-логику
+@AllArgsConstructor //конструктор для внедрения зависимостей между полями класса
 public class AppService {
   private List<Application> applications;
   private UserRepository userRepository;
   private PasswordEncoder passwordEncoder;
 
-@PostConstruct
+@PostConstruct // метод должен выполняться после создания бина
   public void loadAppInDB(){
     Faker faker = new Faker();
-    applications = IntStream.rangeClosed(1, 100)
+    applications = IntStream.rangeClosed(1, 100) //поток чисел для индификатора приложений
         .mapToObj(i -> Application.builder()
           .id(i)
           .name(faker.app().name())

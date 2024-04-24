@@ -15,14 +15,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyUserDetailsService implements UserDetailsService {
 
-  @Autowired // мНужно обновить память по внедрениям зависимостям
+  @Autowired // обновить память по внедрениям зависимостям
   private UserRepository userRepository;
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
     Optional<UserEntity> user = userRepository.findByUsername(username);
-    return user.map(MyUserDetails::new) // Применяет функцию MyUserDetails::new к объекту user, если он присутствует.
-        .orElseThrow(() -> new UsernameNotFoundException(username + " not found")); // Если user не присутствует, выбрасывает исключение UsernameNotFoundException с сообщением о том, что пользователь с указанным именем не найден.
+    return user.map(MyUserDetails::new) // Применяет функцию MyUserDetails::new к объекту user, если он присутствует и создается обьект myUserDetails
+        .orElseThrow(() -> new UsernameNotFoundException(username + " not found"));
 
   }
 }

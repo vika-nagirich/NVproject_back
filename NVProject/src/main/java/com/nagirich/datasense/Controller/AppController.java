@@ -26,7 +26,7 @@ public class AppController {
   }
 
   @GetMapping("/all-app")
-  @PreAuthorize("hasAuthority('ROLE_USER')")// обязательно нужно указывать префикс "ROLE_"
+  @PreAuthorize("hasAuthority('ROLE_USER')")
   public List<Application> allApplications(){
     return appService.allApplications();
   }

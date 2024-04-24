@@ -19,11 +19,11 @@ public class MyUserDetails implements UserDetails {
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
-    // Возвращает коллекцию ролей пользователя.
-    // Разделяет строку с ролями пользователя на отдельные роли по запятой,
-    // затем преобразует массив строк в поток строк.
+    // возвращает коллекцию ролей пользователя
+    // разделяет строку с ролями пользователя на отдельные роли
+    // затем преобразует массив строк в поток строк
     return Arrays.stream(user.getRoles().split(", "))
-        // Каждую строку (роль) преобразует в объект SimpleGrantedAuthority,
+        // каждую строку преобразуем в объект SimpleGrantedAuthority,
         // который представляет роль в виде реализации интерфейса GrantedAuthority.
         .map(SimpleGrantedAuthority::new)
         // Собирает полученные объекты GrantedAuthority в список коллекции.
