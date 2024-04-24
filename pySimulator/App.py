@@ -8,7 +8,7 @@ def generate_raw_value(previous_raw_value):
     # Увеличиваем предыдущее значение на случайную величину
     return round(previous_raw_value + random.uniform(1, 10))
 
-# Функция для генерации текущего временного метки
+# Функция для генерации текущего временной метки
 def generate_timestamp():
     return int(time.time() * 1000)
 
