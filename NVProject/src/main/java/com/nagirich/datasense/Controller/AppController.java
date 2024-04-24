@@ -2,7 +2,7 @@ package com.nagirich.datasense.Controller;
 
 import java.util.List;
 import com.nagirich.datasense.models.Application;
-import com.nagirich.datasense.models.User;
+
 import com.nagirich.datasense.services.AppService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;

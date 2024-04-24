@@ -7,7 +7,6 @@ import java.util.stream.IntStream;
 import com.github.javafaker.Faker;
 import com.nagirich.datasense.entity.UserEntity;
 import com.nagirich.datasense.models.Application;
-import com.nagirich.datasense.models.User;
 import com.nagirich.datasense.repository.UserRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.AllArgsConstructor;

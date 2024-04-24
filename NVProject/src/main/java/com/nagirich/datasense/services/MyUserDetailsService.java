@@ -3,7 +3,7 @@ package com.nagirich.datasense.services;
 import java.util.Optional;
 import com.nagirich.datasense.config.MyUserDetails;
 import com.nagirich.datasense.entity.UserEntity;
-import com.nagirich.datasense.models.User;
+
 import com.nagirich.datasense.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
