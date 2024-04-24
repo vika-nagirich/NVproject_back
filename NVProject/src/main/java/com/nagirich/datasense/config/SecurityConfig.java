@@ -58,7 +58,10 @@ public class SecurityConfig {
             .requestMatchers("api/v1/apps/welcome",
                 "api/v1/apps/new-user",
                 "registration",
-                "/","/portfolio").permitAll() // Разрешение доступа к конкретному URL без аутентификации
+                    "about/**",
+                    "/"
+                    ).permitAll() // Разрешение доступа к конкретному URL без аутентификации
+
 
             .requestMatchers("api/v1/apps/**").authenticated()) // Запросы по определенному шаблону должны быть аутентифицированы
         .formLogin(AbstractAuthenticationFilterConfigurer::permitAll) // Разрешение доступа к странице входа (форме входа) без аутентификации
